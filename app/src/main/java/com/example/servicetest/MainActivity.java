@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,6 +16,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private Button stop;
     private Button bind;
     private Button unBind;
+    private Button startIntentService;
     private MyService.MyDownloadBinder binder;
     private ServiceConnection connection=new ServiceConnection() {
         @Override
@@ -37,10 +39,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
         stop=(Button)findViewById(R.id.stop_service);
         bind=(Button)findViewById(R.id.bind_service);
         unBind=(Button)findViewById(R.id.unbind_service);
+        startIntentService=(Button)findViewById(R.id.start_IntentService);
         start.setOnClickListener(this);
         stop.setOnClickListener(this);
         bind.setOnClickListener(this);
         unBind.setOnClickListener(this);
+        startIntentService.setOnClickListener(this);
     }
 
     @Override
@@ -61,6 +65,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.unbind_service:
                     unbindService(connection);
+                break;
+            case R.id.start_IntentService:
+                Log.d(MyIntentService.TAG2,"Thread id is "+Thread.currentThread().getId());
+                Intent startIntentService=new Intent(this,MyIntentService.class);
+                startService(startIntentService);
                 break;
             default:
                 break;
